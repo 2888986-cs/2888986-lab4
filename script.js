@@ -32,12 +32,22 @@ async function searchCountry(countryName) {
                 const borderResponse = await fetch(`https://restcountries.com/v3.1/alpha/{border}`);
                 if (borderResponse.ok) {
                     const borderData = await borderResponse.json();
-                    borderingCountries.push(borderData[0].name.common);
+                    borderingCountries.push({
+                        name: borderData[0].name.common,
+                        flag: borderData[0].flags.svg
+                    });
                 }
             }
             document.getElementById('bordering-countries').innerHTML = `
                 <h3>Bordering Countries:</h3>
-                <ul>${borderingCountries.map(country => `<li>${country}</li>`).join('')}</ul>
+                <div>
+                    ${borderingCountries.map(border => `
+                        <div style="margin-bottom: 10px;">
+                            <img src="${border.flag}" alt="${border.name} flag" width="60">
+                            <p>${border.m=name}</p>
+                        </div>
+                    `).join('')}
+                </div>
             `;
         } else {
             document.getElementById('bordering-countries').innerHTML = `<p>No bordering countries.</p>`;
