@@ -11,7 +11,7 @@ async function searchCountry(countryName) {
         document.getElementById('bordering-countries').innerHTML = '';
         document.getElementById('error-message').innerHTML = '';
         // Fetch country data
-        const response = await fetch(' https://restcountries.com/v3.1/name/{countryName}?fullText = True');
+        const response = await fetch(`https://restcountries.com/v3.1/name/{countryName}?fullText = True`);
         if (!response.ok) {
             throw new Error('country no found');
         }
@@ -26,6 +26,22 @@ async function searchCountry(countryName) {
             <img src="${country.flags.svg}" alt="${country.name.common} flag">`
         ;
         // Fetch bordering countries
+        if ( country.borders) {
+            const borderingCountries = [];
+            for (const border of country.borders) {
+                const borderResponse = await fetch(`https://restcountries.com/v3.1/alpha/{border}`);
+                if (borderResponse.ok) {
+                    const borderData = await borderResponse.json();
+                    borderingCountries.push(borderData[0].name.common);
+                }
+            }
+            document.getElementById('bordering-countries').innerHTML = `
+                <h3>Bordering Countries:</h3>
+                <ul>${borderingCountries.map(country => `<li>${country}</li>`).join('')}</ul>
+            `;
+        } else {
+            document.getElementById('bordering-countries').innerHTML = `<p>No bordering countries.</p>`;
+        }
         // Update bordering countries section
     } catch (error) {
         // Show error message
