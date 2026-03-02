@@ -1,4 +1,4 @@
-// Search function
+
 async function searchCountry(countryName) {
     const spinner = document.getElementById('loading-spinner');
     const countryInfo = document.getElementById('country-info');
@@ -6,7 +6,6 @@ async function searchCountry(countryName) {
     const errorMessage = document.getElementById('error-message');
 
     try {
-        // Show spinner
         spinner.classList.remove("hidden");
 
         // Clear previous content
@@ -23,8 +22,6 @@ async function searchCountry(countryName) {
 
         const countryData = await response.json();
         const country = countryData[0];
-
-        // Display main country info
         countryInfo.innerHTML = `
             <h2>${country.name.common}</h2>
             <p><strong>Capital:</strong> ${country.capital ? country.capital[0] : "N/A"}</p>
@@ -34,8 +31,6 @@ async function searchCountry(countryName) {
                  alt="${country.name.common} flag" 
                  width="150">
         `;
-
-        // Fetch bordering countries (optimized)
         if (country.borders && country.borders.length > 0) {
 
             const borderPromises = country.borders.map(code =>
@@ -78,14 +73,10 @@ async function searchCountry(countryName) {
     }
 }
 
-// ===============================
-// Event Listeners
-// ===============================
 
 const searchBtn = document.getElementById('search-btn');
 const countryInput = document.getElementById('country-input');
 
-// Search button click
 searchBtn.addEventListener('click', () => {
     const countryName = countryInput.value.trim();
     if (countryName) {
@@ -94,7 +85,6 @@ searchBtn.addEventListener('click', () => {
     }
 });
 
-// Enter key press
 countryInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
         const countryName = countryInput.value.trim();
