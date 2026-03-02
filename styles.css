@@ -30,3 +30,11 @@
     gap: 10px;
 }
 
+.error {
+    color: red;
+    font-weight: bold;
+}
+
+.hidden {
+    display: none;
+}
