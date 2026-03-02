@@ -2,8 +2,14 @@
 // Required: Use try/catch OR .catch() for error handling
 
 async function searchCountry(countryName) {
+    const spinner = document.getElementById('loading-spinner');
     try {
         // Show loading spinner
+        spinner.classList.remove("hidden");
+
+        document.getElementById('country-info').innerHTML = '';
+        document.getElementById('bordering-countries').innerHTML = '';
+        document.getElementById('error-message').innerHTML = '';
         // Fetch country data
         // Update DOM
         document.getElementById('country-info').innerHTML = `
